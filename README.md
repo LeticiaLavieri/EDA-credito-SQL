@@ -17,7 +17,7 @@ O AWS S3-bucket é um serviço de armazenamento em nuvem que permite armazenar e
 Com o Athena, não é necessário carregar dados em um banco de dados separado, permitindo consultas rápidas e eficientes diretamente sobre os dados armazenados no S3. Juntas, essas ferramentas possibilitam uma manipulação ágil e flexível dos dados, otimizando o processo de análise.
 
 O objetivo desta análise é identificar padrões e tendências nos dados de crédito, fornecer insights sobre o comportamento dos clientes e auxiliar na tomada de decisões estratégicas. 
-Pretendo explorar diversas ideias de insights, incluindo a análise do perfil de crédito dos clientes, a identificação de fatores que influenciam a aprovação ou rejeição de crédito e a previsão do comportamento futuro dos clientes com base nos dados históricos.
+Foi explorado diversas ideias de insights, incluindo a análise do perfil de crédito dos clientes, a identificação de fatores que influenciam a aprovação ou rejeição de crédito e a previsão do comportamento futuro dos clientes com base nos dados históricos.
 
 <br>
 
@@ -73,3 +73,83 @@ Existe uma versão do dataser dos dados disponibilizados em: https://github.com/
 ![image](https://github.com/LeticiaLavieri/EDA-credito-SQL/assets/165159056/a2ac0e4d-d1dc-41ea-b85f-55d5f6055423)
 ![image](https://github.com/LeticiaLavieri/EDA-credito-SQL/blob/main/Imagens/Imagens%20do%20projeto%202.PNG?raw=true)
 ![image](https://github.com/LeticiaLavieri/EDA-credito-SQL/blob/main/Imagens/Imagens%20do%20projeto%203.PNG?raw=true)
+
+
+```sql
+SELECT 
+	COUNT(*) AS Quantidade_linhas
+FROM creditoSQL;
+
+
+SELECT *
+FROM creditoSQL
+LIMIT 10;
+
+
+SELECT DISTINCT escolaridade FROM creditoSQL;
+SELECT DISTINCT estado_civil FROM creditoSQL;
+SELECT DISTINCT salario_anual FROM creditoSQL;
+SELECT DISTINCT tipo_cartao FROM creditoSQL;
+
+
+SELECT 
+    COUNT(*) AS Quantidade, salario_anual
+FROM creditoSQL
+    GROUP BY salario_anual;
+    
+SELECT 
+	COUNT(*) AS Quantidade_clientes, 
+    sexo 
+FROM creditoSQL 
+GROUP BY sexo;
+
+
+SELECT 
+	COUNT(*) AS Quantidade,
+	sexo,
+	salario_anual
+FROM creditoSQL
+GROUP BY sexo,
+	salario_anual;
+
+
+SELECT 
+	MIN(idade) AS idade_minima,
+	MAX(idade) AS idade_maxima
+FROM creditoSQL;
+
+
+SELECT 
+    MAX(limite_credito) AS limite_maximo,
+    escolaridade,
+    tipo_cartao,
+    sexo
+FROM creditoSQL 
+WHERE
+    escolaridade != 'na' AND 
+    tipo_cartao != 'na'
+GROUP BY 
+    escolaridade,
+    tipo_cartao,
+    sexo 
+ORDER BY 
+    limite_maximo DESC LIMIT 10;
+
+
+SELECT
+    MAX(limite_credito) AS limite_minimo,
+    escolaridade,
+    tipo_cartao,
+    sexo 
+FROM creditoSQL
+WHERE escolaridade != 'na' AND tipo_cartao != 'na' 
+GROUP BY 
+    escolaridade, 
+    tipo_cartao,
+    sexo 
+ORDER BY limite_minimo ASC LIMIT 10;
+```
+<br>
+
+#### Ferramentas utilizadas:
+![SQLite](https://img.shields.io/badge/Sqlite-003B57?style=for-the-badge&logo=sqlite&logoColor=white) ![Excel](https://img.shields.io/badge/Microsoft_Excel-217346?style=for-the-badge&logo=microsoft-excel&logoColor=white) ![AWS](https://img.shields.io/badge/Amazon_AWS-FF9900?style=for-the-badge&logo=amazonaws&logoColor=white)
